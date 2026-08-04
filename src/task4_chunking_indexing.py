@@ -30,9 +30,6 @@ CHROMA_DIR = Path(__file__).parent.parent / "chroma_db"
 # CONFIGURATION — Giải thích lựa chọn
 # =============================================================================
 
-# Corpus: legal dài (điều khoản ~350–530 ký tự) + news ngắn (~600–1600 ký tự)
-CHUNK_SIZE = 800        # ~1–2 điều khoản / 1 mục help; đủ ngữ cảnh, chưa trộn nhiều chủ đề
-CHUNK_OVERLAP = 100     # ~12%; tránh cắt giữa câu pháp lý dài, giữ mạch sang chunk kế
 # -----------------------------------------------------------------------------
 # A. CHUNKING STRATEGY: MarkdownHeaderTextSplitter + RecursiveCharacterTextSplitter
 # -----------------------------------------------------------------------------
@@ -67,7 +64,14 @@ CHUNKING_METHOD = "markdown_header + recursive"
 #     tràn context.
 #   - Chunk quá lớn (1000+) làm embedding bị "trung bình hoá", giảm độ chính xác
 #     retrieval; chunk quá nhỏ (<200) làm mất ngữ cảnh, câu trả lời bị cụt.
+CHUNK_SIZE = 500
 
+# VÌ SAO CHUNK_OVERLAP = 50 (10% của CHUNK_SIZE)?
+#   - Chống mất ngữ cảnh ở ranh giới cắt: nếu một câu bị cắt đôi giữa 2 chunk,
+#     phần overlap đảm bảo ít nhất một chunk vẫn chứa đủ ngữ cảnh của câu đó.
+#   - 10% là mức cân bằng phổ biến: đủ để "nối" ngữ cảnh, nhưng không lặp lại quá
+#     nhiều gây phình vector store và làm nhiều chunk gần trùng nhau cùng lọt top-k.
+CHUNK_OVERLAP = 50
 
 # Heading nào sẽ được tách ở tầng 1 (và tên metadata tương ứng)
 MARKDOWN_HEADERS_TO_SPLIT_ON = [
