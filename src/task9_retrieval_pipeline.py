@@ -25,10 +25,11 @@ Logic:
     điểm số giữa hai nhóm rồi chọn ngưỡng nằm giữa.
 """
 
+from . import task8_pageindex_vectorless as _pageindex_mod
 from .task5_semantic_search import semantic_search
 from .task6_lexical_search import lexical_search
 from .task7_reranking import rerank, rerank_rrf
-from .task8_pageindex_vectorless import pageindex_search
+from .task8_pageindex_vectorless import pageindex_search, upload_documents
 
 
 # =============================================================================
@@ -77,33 +78,50 @@ def retrieve(
             'source': str  # 'hybrid' hoặc 'pageindex'
         }
     """
-    # TODO: Implement full retrieval pipeline
-    #
-    # Step 1: Song song chạy semantic + lexical
-    # dense_results = semantic_search(query, top_k=top_k * 2)
-    # sparse_results = lexical_search(query, top_k=top_k * 2)
-    #
+    # Step 1: Song song (tuần tự) chạy semantic + lexical — lấy dư (top_k*2) để
+    # RRF/rerank có đủ ứng viên chọn lọc, không chỉ dựa vào top_k*1 kết quả hẹp.
+    dense_results = semantic_search(query, top_k=top_k * 2)
+    sparse_results = lexical_search(query, top_k=top_k * 2)
+
+    # Điểm cosine GỐC (chưa qua RRF) — đây là căn cứ duy nhất hợp lệ để quyết định
+    # fallback (xem cảnh báo ở đầu file: điểm RRF fused không phản ánh độ liên quan thật).
+    best_dense_score = dense_results[0]["score"] if dense_results else 0.0
+
     # Step 2: Merge bằng RRF
-    # merged = rerank_rrf([dense_results, sparse_results], top_k=top_k * 2)
-    # for item in merged:
-    #     item["source"] = "hybrid"
-    #
-    # Step 3: Rerank
-    # if use_reranking and merged:
-    #     final_results = rerank(query, merged, top_k=top_k, method=RERANK_METHOD)
-    # else:
-    #     final_results = merged[:top_k]
-    #
+    merged = rerank_rrf([dense_results, sparse_results], top_k=top_k * 2)
+    for item in merged:
+        item["source"] = "hybrid"
+
+    # Step 3: Rerank (RRF lại lần nữa nếu method="rrf" — vô hại vì merged đã là 1 list
+    # đơn, rerank() sẽ tự nhận diện và chỉ sắp xếp lại theo rank hiện có)
+    if use_reranking and merged:
+        final_results = rerank(query, merged, top_k=top_k, method=RERANK_METHOD)
+        for item in final_results:
+            item.setdefault("source", "hybrid")
+    else:
+        final_results = merged[:top_k]
+
     # Step 4: Check threshold DÙNG ĐIỂM COSINE GỐC (dense_results), KHÔNG PHẢI RRF
-    # best_score = dense_results[0]["score"] if dense_results else 0.0
-    # if best_score < score_threshold:
-    #     print(f"  ⚠ Semantic best score ({best_score:.3f}) < threshold ({score_threshold})")
-    #     fallback = pageindex_search(query, top_k=top_k)
-    #     if fallback:
-    #         return fallback
-    #
-    # return final_results[:top_k]
-    raise NotImplementedError("Implement retrieve")
+    if best_dense_score < score_threshold:
+        print(f"  ⚠ Semantic best score ({best_dense_score:.3f}) < threshold "
+              f"({score_threshold}) → fallback sang PageIndex")
+        try:
+            # task8_pageindex_vectorless.pageindex_search() cần DOC_ID (biến global
+            # trong module đó) đã được set qua upload_documents() trước — upload 1
+            # lần duy nhất rồi cache lại, tránh polling indexing (tốn ~vài chục giây)
+            # ở mỗi lần fallback.
+            if _pageindex_mod.DOC_ID is None:
+                upload_documents()
+            fallback = pageindex_search(query, top_k=top_k)
+        except Exception as e:
+            # PageIndex có thể chưa cấu hình API key / hết quota / mất mạng — không
+            # để lỗi ở fallback làm sập cả pipeline, quay lại dùng kết quả hybrid.
+            print(f"  ⚠ PageIndex fallback lỗi ({e}), dùng lại kết quả hybrid")
+            fallback = []
+        if fallback:
+            return fallback[:top_k]
+
+    return final_results[:top_k]
 
 
 if __name__ == "__main__":
