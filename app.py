@@ -1,5 +1,5 @@
 """
-RAG Chatbot — E-commerce Support (Starter Template)
+RAG Chatbot — Trợ Lý Pháp Lý Khởi Nghiệp & Thương Mại Điện Tử
 Streamlit app kết nối RAG Retrieval (Task 9) và Generation (Task 10).
 
 Chạy:
@@ -24,8 +24,8 @@ sys.path.insert(0, str(PROJECT_ROOT))
 # =============================================================================
 
 st.set_page_config(
-    page_title="E-commerce Support RAG Chatbot",
-    page_icon="🛒",
+    page_title="Trợ Lý Pháp Lý Khởi Nghiệp & TMĐT",
+    page_icon="⚖️",
     layout="wide",
     initial_sidebar_state="expanded",
 )
@@ -35,18 +35,18 @@ st.set_page_config(
 # =============================================================================
 
 with st.sidebar:
-    st.title("🛒 E-commerce Support RAG")
-    st.caption("Trợ lý hỏi đáp về chính sách thương mại điện tử và hỗ trợ khách hàng (đổi trả, thanh toán, bảo mật, người bán)")
+    st.title("⚖️ Trợ Lý Pháp Lý")
+    st.caption("Tra cứu quy định pháp lý khi bán hàng trên TikTok Shop, Shopee, đăng ký Hộ kinh doanh cá thể hoặc thành lập Công ty TNHH/Cổ phần")
 
     st.divider()
 
     st.subheader("💡 Câu hỏi gợi ý")
     suggestions = [
-        "Thời hạn yêu cầu trả hàng/hoàn tiền là bao lâu?",
-        "Shopee hỗ trợ những phương thức thanh toán nào?",
-        "Làm sao để đổi phương thức thanh toán đơn hàng?",
-        "Quy định về đăng bán sản phẩm cho người bán?",
-        "Cách mua hàng trên Shopee của quốc gia khác?",
+        "Bán hàng online trên TikTok Shop đạt doanh thu bao nhiêu thì phải nộp thuế TNCN và GTGT?",
+        "Hồ sơ và thủ tục đăng ký Hộ kinh doanh cá thể gồm những giấy tờ gì?",
+        "Điều kiện thành lập Công ty TNHH/Cổ phần ở Việt Nam là gì?",
+        "Quy định của TikTok Shop và Shopee về người bán và nghĩa vụ thuế như thế nào?",
+        "Có cần đăng ký giấy phép gì khi bán hàng trên nền tảng thương mại điện tử không?",
     ]
     for s in suggestions:
         if st.button(s, use_container_width=True, key=f"sug_{s[:20]}"):
@@ -57,8 +57,8 @@ with st.sidebar:
     top_k = st.slider("Số chunks retrieval (top_k)", 3, 10, 5)
 
     st.divider()
-    st.caption("**Kiến trúc hệ thống:**")
-    st.caption("Hybrid Retrieval (Semantic + BM25) → RRF Rerank → PageIndex Fallback → LLM Generation có Citation")
+    st.caption("**Nguồn dữ liệu:**")
+    st.caption("Luật Doanh nghiệp 2020, Nghị định 52/2013/NĐ-CP, quy định người bán trên TikTok Shop/Shopee")
 
 # =============================================================================
 # SESSION STATE
@@ -73,8 +73,8 @@ if "pending_query" not in st.session_state:
 # MAIN CHAT AREA
 # =============================================================================
 
-st.title("🛒 E-commerce Support RAG Chatbot")
-st.caption("Hệ thống hỏi đáp chính sách e-commerce và trợ giúp khách hàng")
+st.title("⚖️ Trợ Lý Pháp Lý Khởi Nghiệp & Thương Mại Điện Tử")
+st.caption("Hệ thống hỏi đáp về quy định pháp lý liên quan đến bán hàng online, đăng ký doanh nghiệp và hoạt động thương mại điện tử")
 
 # Hiển thị lịch sử chat
 for msg in st.session_state.messages:
@@ -95,7 +95,7 @@ for msg in st.session_state.messages:
 # QUERY HANDLING
 # =============================================================================
 
-user_input = st.chat_input("Nhập câu hỏi của bạn về chính sách/hỗ trợ e-commerce...")
+user_input = st.chat_input("Nhập câu hỏi pháp lý của bạn về bán hàng online, đăng ký doanh nghiệp hoặc thương mại điện tử...")
 query = user_input or st.session_state.pending_query
 
 if query:
