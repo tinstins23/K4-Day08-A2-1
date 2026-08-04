@@ -1,17 +1,82 @@
 [
   {
-    "question": "Người mua có thể yêu cầu trả hàng/hoàn tiền trong thời hạn bao lâu sau khi nhận hàng?",
-    "expected_answer": "Trong vòng 15 ngày kể từ khi giao hàng thành công (24 giờ đối với thực phẩm tươi sống/đông lạnh).",
-    "expected_context": "Trang Returns and Refunds Policy, mục Return/Refund Eligibility"
-  },
-  {
     "question": "Shopee hỗ trợ những phương thức thanh toán nào?",
-    "expected_answer": "ShopeePay Wallet, thẻ tín dụng/ghi nợ, trả góp qua thẻ, QR Code, chuyển khoản qua app ngân hàng, thẻ NAPAS, Apple Pay, Google Pay, và COD.",
-    "expected_context": "Trang Payment Methods Overview"
+    "expected_answer": "Shopee hỗ trợ 09 hình thức thanh toán, gồm Ví ShopeePay, thẻ tín dụng/ghi nợ, trả góp bằng thẻ tín dụng, thanh toán QR, ứng dụng ngân hàng, thẻ nội địa NAPAS, Apple Pay, Google Pay, COD và thêm SPayLater.",
+    "expected_context": "payment methods shopee thanh toán ví shopeepay thẻ tín dụng qr apple pay google pay cod spaylater"
   },
   {
-    "question": "Người bán không được đăng bán những sản phẩm nào?",
-    "expected_answer": "Hàng giả/nhái, sản phẩm bất hợp pháp, vi phạm sở hữu trí tuệ, và các mặt hàng nằm trong danh sách cấm của sàn.",
-    "expected_context": "Trang Product Listing Regulations, mục Prohibited Content"
+    "question": "Người mua có thể yêu cầu trả hàng/hoàn tiền trong thời hạn bao lâu sau khi nhận hàng?",
+    "expected_answer": "Trong vòng 15 ngày kể từ khi giao hàng thành công, riêng thực phẩm tươi sống và đông lạnh là 24 giờ.",
+    "expected_context": "returns refund policy 15 ngày thực phẩm tươi sống đông lạnh"
+  },
+  {
+    "question": "Người mua cần làm gì để có thể yêu cầu trả hàng/hoàn tiền bằng COD hoặc chuyển khoản?",
+    "expected_answer": "Tài khoản Shopee của người mua phải liên kết với các phương thức nhận hoàn tiền hợp lệ như tài khoản ngân hàng hoặc ví điện tử.",
+    "expected_context": "returns refund policy cod chuyển khoản tài khoản shopee liên kết hoàn tiền"
+  },
+  {
+    "question": "Những sản phẩm nào bị nghiêm cấm khi đăng bán trên Shopee?",
+    "expected_answer": "Shopee nghiêm cấm những sản phẩm phản động, khiêu dâm, bạo lực, vi phạm sở hữu trí tuệ, tài liệu bí mật, hoặc nằm trong danh sách sản phẩm bị cấm/hạn chế.",
+    "expected_context": "product listing regulations sản phẩm bị cấm hàng hóa không được phép đăng bán"
+  },
+  {
+    "question": "Hình ảnh sản phẩm khi đăng bán trên Shopee cần đáp ứng những tiêu chuẩn nào?",
+    "expected_answer": "Hình ảnh phải rõ ràng, có ít nhất một ảnh thật của sản phẩm chiếm tối thiểu 40% khung hình và không chứa nội dung phản cảm.",
+    "expected_context": "product listing regulations hình ảnh sản phẩm ảnh thật 40%"
+  },
+  {
+    "question": "Tên sản phẩm trên Shopee có được dùng ký tự đặc biệt hoặc từ khóa fake/nhái không?",
+    "expected_answer": "Không, tên sản phẩm phải tiếng Việt có dấu, rõ nghĩa, không dùng ký tự đặc biệt và không chứa từ khóa fake/nhái.",
+    "expected_context": "product listing regulations tên sản phẩm tiếng việt có dấu không dùng ký tự đặc biệt fake nhái"
+  },
+  {
+    "question": "Khi đăng bán mỹ phẩm trên Shopee, người bán cần chuẩn bị những giấy tờ gì?",
+    "expected_answer": "Người bán cần có phiếu công bố mỹ phẩm, chứng nhận đại lý hoặc hợp đồng mua bán, và hóa đơn nhập hàng nếu là đại lý hoặc nhập từ trung gian.",
+    "expected_context": "product listing regulations mỹ phẩm giấy tờ phiếu công bố chứng nhận đại lý hóa đơn"
+  },
+  {
+    "question": "Shopee có quy định gì về việc đăng bán sản phẩm thuốc không kê đơn?",
+    "expected_answer": "Người bán cần tuân thủ Luật Dược, có đầy đủ giấy tờ và không lợi dụng đăng bán thuốc không kê đơn để quảng cáo trái pháp luật.",
+    "expected_context": "product listing regulations thuốc không kê đơn giấy tờ luật dược quảng cáo"
+  },
+  {
+    "question": "Người mua có thể trả hàng COM nếu là thành viên Shopee hạng Vàng và Kim Cương không?",
+    "expected_answer": "Có, người mua hạng Vàng và Kim Cương được áp dụng trả hàng COM và không giới hạn hạn mức theo tháng trong nhiều trường hợp.",
+    "expected_context": "returns refund policy trả hàng com thành viên vàng kim cương không giới hạn hạn mức"
+  },
+  {
+    "question": "Người mua sử dụng gói ShopeeVIP được trả hàng COM tối đa bao nhiêu lần mỗi tháng?",
+    "expected_answer": "Người mua sử dụng gói ShopeeVIP được áp dụng hạn mức trả hàng COM tối đa 15 lần mỗi tháng.",
+    "expected_context": "returns refund policy shopeevip 15 lần mỗi tháng"
+  },
+  {
+    "question": "Shopee có quy định gì về cách người mua đặt hàng và thanh toán trên sàn?",
+    "expected_answer": "Người mua cần đăng nhập, tìm kiếm sản phẩm, tham khảo thông tin, chọn phương thức thanh toán và vận chuyển rồi xác nhận đơn hàng.",
+    "expected_context": "ecommerce operating regulations quy trình mua hàng đăng nhập tìm kiếm đặt hàng phương thức thanh toán vận chuyển"
+  },
+  {
+    "question": "Người bán cần làm gì sau khi đăng tin bán hàng trên Shopee?",
+    "expected_answer": "Người bán cần đưa nội dung bán hàng lên sàn, rồi Shopee sẽ kiểm duyệt theo chính sách đăng bán và quy định kiểm duyệt của sàn.",
+    "expected_context": "ecommerce operating regulations người bán đăng tin shopee kiểm duyệt chính sách"
+  },
+  {
+    "question": "Shopee có những phương thức vận chuyển nào được nêu trong quy chế hoạt động?",
+    "expected_answer": "Shopee liệt kê nhiều đơn vị vận chuyển như SPX, GrabExpress, beDelivery, Ahamove, Viettel Post, GHN, Ninja Van và VNPost.",
+    "expected_context": "ecommerce operating regulations vận chuyển spx grabexpress ahamove ghn ninja van vnpost"
+  },
+  {
+    "question": "Người mua có bắt buộc đăng ký tài khoản trước khi giao dịch trên Shopee không?",
+    "expected_answer": "Có, người mua bắt buộc phải đăng ký tài khoản để tham gia giao dịch mua bán trên Shopee.",
+    "expected_context": "ecommerce operating regulations người mua đăng ký tài khoản"
+  },
+  {
+    "question": "Shopee có quy định gì về việc sử dụng voucher và mã giảm giá?",
+    "expected_answer": "Voucher và mã giảm giá chỉ có thể sử dụng tại các giao dịch được Shopee xác định và phải tuân thủ quy định của Shopee.",
+    "expected_context": "ecommerce operating regulations voucher mã giảm giá giao dịch được xác định"
+  },
+  {
+    "question": "Nếu người mua nhận được sản phẩm sai kích cỡ hoặc sai màu thì có thể làm gì?",
+    "expected_answer": "Người mua có thể gửi yêu cầu trả hàng/hoàn tiền nếu sản phẩm giao sai so với thông tin đăng bán hoặc bị lỗi trong quá trình vận chuyển.",
+    "expected_context": "returns refund policy sai kích cỡ sai màu lỗi vận chuyển"
   }
 ]
